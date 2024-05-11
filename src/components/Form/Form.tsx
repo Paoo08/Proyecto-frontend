@@ -14,12 +14,24 @@ function Form() {
   const [password, setPassword] = useState<string>("");
   const [showData, setShowData] = useState<boolean>(false);
   const [user, setUser] = useState<any>(null);
+  const [homeworks, setHomeworks] = useState<any>(null);
 
   useEffect(() => {
-    const userInStorageString = window.localStorage.getItem("user") as string;
-    const userInStorage = JSON.parse(userInStorageString);
-    setUser(userInStorage);
-  }, []);
+    const data = async () => {
+      try {
+        let url = `${API_URL}api/v1/homeworks/findOne`;
+        let options = {};
+
+        const response = await fetch(url, options);
+        const data = await response.json();
+        setHomeworks(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    data();
+  }, [API_URL, user]);
 
   const handleOnEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
@@ -66,32 +78,70 @@ function Form() {
   };
 
   const fetchHomework = async () => {
-    try {
-      const response = await fetch(`${API_URL}api/v1/homeworks`, {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      });
-      const data = await response.json();
-      console.log(data);
-    } catch (error) {
-      console.log(error);
-    }
+    // try {
+    //   const response = await fetch(`${API_URL}api/v1/homeworks`, {
+    //     headers: {
+    //       Authorization: `Bearer ${user.token}`,
+    //     },
+    //   });
+    //   const data = await response.json();
+    //   console.log(data);
+    // } catch (error) {
+    //   console.log(error);
+    // }
   };
 
   return (
     <>
-      {user && (
+      {
+        // useEffect(() => {
+        //   const userInStorageString = window.localStorage.getItem("user") as string;
+        //   const userInStorage = JSON.parse(userInStorageString);
+        //   setUser(userInStorage);
+        // }, []);
+      }
+      {/* {homeworks && (
         <section className="dataContainer">
           {
             <>
-              <p>Email: {user.user.email}</p>
-              <p>Nombre: {user.user.name}</p>
-              <p>ID: {user.user.id}</p>
+              <p>Name: {homeworks.name}</p>
+              <p>Subject: {homeworks.subject}</p>
+              <p>Description: {homeworks.description}</p>
+              <p>DateAssignment: {homeworks.dateAssignment}</p>
+              <p>Deadline: {homeworks.deadline}</p>
+              <p>Status: {homeworks.status}</p>
             </>
           }
         </section>
+      )} */}
+
+      {homeworks && (
+        <section className="dataContainer">
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Subject</th>
+                <th>Description</th>
+                <th>Date Assignment</th>
+                <th>Deadline</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{homeworks.name}</td>
+                <td>{homeworks.subject}</td>
+                <td>{homeworks.description}</td>
+                <td>{homeworks.dateAssignment}</td>
+                <td>{homeworks.deadline}</td>
+                <td>{homeworks.status}</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
       )}
+
       <section className="formContainer">
         <span className="inputContainer">
           <label htmlFor="email">Email:</label>

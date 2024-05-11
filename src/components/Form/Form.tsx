@@ -43,8 +43,7 @@ function Form() {
   };
 
   const handleOnClick = () => {
-    // logIn({ email, password });
-    fetchHomework();
+    logIn({ email, password });
   };
 
   const logIn = async ({
@@ -77,45 +76,17 @@ function Form() {
     }
   };
 
-  const fetchHomework = async () => {
-    // try {
-    //   const response = await fetch(`${API_URL}api/v1/homeworks`, {
-    //     headers: {
-    //       Authorization: `Bearer ${user.token}`,
-    //     },
-    //   });
-    //   const data = await response.json();
-    //   console.log(data);
-    // } catch (error) {
-    //   console.log(error);
-    // }
-  };
-
   return (
     <>
-      {
-        // useEffect(() => {
-        //   const userInStorageString = window.localStorage.getItem("user") as string;
-        //   const userInStorage = JSON.parse(userInStorageString);
-        //   setUser(userInStorage);
-        // }, []);
-      }
-      {/* {homeworks && (
-        <section className="dataContainer">
-          {
-            <>
-              <p>Name: {homeworks.name}</p>
-              <p>Subject: {homeworks.subject}</p>
-              <p>Description: {homeworks.description}</p>
-              <p>DateAssignment: {homeworks.dateAssignment}</p>
-              <p>Deadline: {homeworks.deadline}</p>
-              <p>Status: {homeworks.status}</p>
-            </>
-          }
-        </section>
-      )} */}
+      {/* {useEffect(() => {
+        const userInStorageString = window.localStorage.getItem(
+          "user"
+        ) as string;
+        const userInStorage = JSON.parse(userInStorageString);
+        setUser(userInStorage);
+      }, [])} */}
 
-      {homeworks && (
+      {user && (
         <section className="dataContainer">
           <table>
             <thead>
